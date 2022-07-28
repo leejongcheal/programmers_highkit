@@ -1,18 +1,12 @@
 from bisect import bisect_left
 def solution(citations):
-    res = 0
-    citations.sort()
-    prev = -1
-    prev_cnt = 0
-    for i in range(len(citations)):
-        if citations[i] != prev:
-            now = citations[i]
-            cnt = len(citations) - i
-            if cnt >= now and prev_cnt <= now:
-                res = citations[i]
-            prev = now
-            prev_cnt = len(citations) - cnt
-    return res
+    citations.sort(reverse=True)
+    answer = 0
+    n = len(citations)
+    for i in range(n):
+        if i+1 <= citations[i]:
+            answer = i+1
+    return answer
 
-citations = [2,2,3,3,4,4]
+citations = [3, 0, 6, 1, 5]
 print(solution(citations))

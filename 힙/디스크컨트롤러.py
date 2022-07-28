@@ -28,3 +28,5 @@ def solution(jobs):
 
 jobs = [[0, 3], [1, 9], [2, 6]]
 print(solution(jobs))
+
+# https://school.programmers.co.kr/learn/courses/30/lessons/42627

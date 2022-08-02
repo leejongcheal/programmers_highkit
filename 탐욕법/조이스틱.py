@@ -1,46 +1,23 @@
-def updown(char):
-    if ord(char) - ord("A") > ord("Z") - ord(char) + 1:
-        return ord("Z") - ord(char) + 1
-    else:
-        return ord(char) - ord("A")
-def direction(index, name, dir, check):
-    i = 1
-    dir_cnt = 1
-    while check[(index + dir*i) % len(name)] == 1:
-        dir_cnt += 1
-        i += 1
-    redir_cnt = 1
-    i = 1
-    while check[(index - (dir*i)) % len(name)] == 1:
-        redir_cnt += 1
-        i += 1
-    if redir_cnt > dir_cnt:
-        return dir_cnt, dir
-    else:
-        return redir_cnt, -dir
+from collections import deque
+from itertools import product
+
 def solution(name):
-    if name == "A"*len(name):
-        return 0
-    answer = 0
-    index = 0
-    check = [0]*len(name)
-    name_cnt = [0]*len(name)
-    for i in range(len(name)):
-        if name[i] == "A":
-            check[i] = 1
-        name_cnt[i] = updown(name[i])
-    index = 0
-    dir = 1
-    while 1:
-        answer += name_cnt[index]
-        check[index] = 1
-        if sum(check) == len(name):
-            break
-        # 방향 고르기
-        move, dir = direction(index, name, dir, check)
-        answer += move
-        index = (index + move * dir) % len(name)
-    return answer
+    results = []
+
+    for rs in product((-1,1), repeat=len(name)-1):
+        name_deque = deque(name)
+        default = deque('A'*len(name))
+
+        for c, r in enumerate([0]+list(rs)):
+            default.rotate(r)
+            name_deque.rotate(r)
+            default[0] = name_deque[0]
+
+            if name_deque == default:
+                results.append(c)
+                break
+
+    return min(set(results))+sum([min(ord(l)-ord('A'), ord('Z')-ord(l)+1) for l in name])
 
 name = "BBBBAAAABA"
 print(solution(name))

@@ -34,3 +34,10 @@ def solution(tickets):
 # tickets = [["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]
 tickets = [["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL","SFO"]]
 print(solution(tickets))
+
+print(
+    solution(
+        [["ICN", "B"], ["B", "C"], ["C", "ICN"], ["ICN", "D"], ["ICN", "E"], ["E", "F"]]
+    )
+    == ["ICN", "B", "C", "ICN", "E", "F", "D"]
+)
